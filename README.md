@@ -29,7 +29,8 @@
 
 2. **자동 반복 모드**  
    버튼 2를 눌러 강도 변경이 3초마다 자동으로 반복되도록 설정합니다. 이를 통해 선풍기를 자동으로 조정할 수 있습니다.
-
+   ![text](./images/button.gif)
+---
 3. **타이머 설정**  
    버튼 3을 눌러 3분, 5분, 7분 중 원하는 시간을 설정합니다. 
    
@@ -39,15 +40,44 @@
 5. **타이머 종료 후 선풍기 OFF**  
    타이머가 종료되면 선풍기가 자동으로 **OFF** 상태로 돌아갑니다.
 
+   ![text](./images/settimer.gif)
+
+---
+
+6. **UART로 팬 제어**
+   UART에서 
+   - WIND_OFF: 선풍기를 끄기
+   - WEAK: 바람 강도 1 (약한 바람)
+   - NORMAL: 바람 강도 2 (보통 바람)
+   - STRONG: 바람 강도 3 (강한 바람)
+
+![text](./images/uart.gif)
 
 ```plaintext
-my-project/              # 최상위 프로젝트 디렉토리
-├── FAN_project/         # FAN_project 디렉토리 (선풍기 제어 시스템)
-│   ├── main.py          # 프로젝트 실행 파일
-│   ├── requirements.txt # 필요한 라이브러리 목록
-│   └── README.md        # 이 문서
-└── 기타 파일들         # 기타 관련 파일들
+FAN_project/              # 최상위 프로젝트 디렉토리
+├── Digital_FAN/         # FAN_project 디렉토리 (선풍기 제어 시스템)
+│   ├── main.c           # 프로젝트 실행 파일
+│   ├── ap/              # 애플리케이션 레벨 코드 (사용자 인터페이스, 서비스)
+│   │   ├── listener/    # 사용자 입력 및 이벤트 처리
+│   │   ├── model/       # 시스템 상태 모델 (선풍기 상태 관리)
+│   │   ├── presenter/   # 데이터와 UI를 연결 (FND, LCD 표시 등)
+│   │   ├── service/     # 비즈니스 로직 (선풍기 작동, 타이머 설정 등)
+│   │   ├── apwind.c     # 선풍기 제어 로직 (모드 전환, 타이머 설정)
+│   │   └── apwind.h     # 선풍기 제어 로직 헤더 파일
+│   ├── driver/          # 하드웨어와의 상호작용을 담당하는 드라이버 코드
+│   │   ├── FND/         # FND (7-segment display) 제어 드라이버
+│   │   ├── LCD/         # LCD 제어 드라이버
+│   │   ├── Motor/       # 선풍기 모터 제어 드라이버
+│   │   ├── button/      # 버튼 입력 처리 드라이버
+│   │   └── buzzer/      # 부저 제어 드라이버
+│   └── Periph/          # 하드웨어 주변 장치 관련 코드
+│       ├── GPIO/        # GPIO 제어 (핀 설정 및 관리)
+│       ├── TIM/         # 타이머 설정 및 관리
+│       └── UART0/       # UART 통신 관련 코드
+├── 기타 파일들         # 기타 관련 파일들
+└── README.md            # 프로젝트 설명서 (개요 및 사용 방법 등)
 
-## 프로젝트 위치
-
-이 프로젝트는 [my-project GitHub 저장소](https://github.com/te31eawq/my-project.git) 내의 `FAN_project` 디렉토리 안에 있습니다. 해당 저장소를 클론하여 사용할 수 있습니다.
+```
+---
+# PPT
+### **[PPT](./최재원%20ppt.pptx)**
